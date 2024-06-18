@@ -1,0 +1,12 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "untp"
+version = "0.0.1"
+requires-python = ">= 3.8"
+dependencies = ["pydantic==2.7.1"]
+authors = [{ name = "Jason Syrotuck", email = "jasyrotuck@gmail.com" }]
+description = "A python implementation of the UNTP data models"
+keywords = ["untp", "un", "transparency"]
