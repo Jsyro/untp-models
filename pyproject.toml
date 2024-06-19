@@ -11,3 +11,6 @@ dependencies = ["pydantic==2.7.1"]
 authors = [{ name = "Jason Syrotuck", email = "jasyrotuck@gmail.com" }]
 description = "A python implementation of the UNTP data models"
 keywords = ["untp", "un", "transparency"]
+
+[project.urls]
+Homepage = 'https://github.com/Jsyro/untp-models'
