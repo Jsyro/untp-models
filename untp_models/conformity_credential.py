@@ -15,6 +15,7 @@ class Classification(BaseModel):
 class Standard(BaseModel):
     # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#standard
     id: str                  # str #AnyUrl
+    type: str = "Standard"
     name: str
     issuingBody: Party
     issueDate: str           #iso8601 datetime string
@@ -23,6 +24,7 @@ class Standard(BaseModel):
 class Regulation(BaseModel):
     # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#regulation
     id: str                  # str #AnyUrl
+    type: str = "Regulation"
     name: str
     issuingBody: Party
     effectiveDate: str       #iso8601 datetime string
@@ -38,12 +40,14 @@ class Metric(BaseModel):
 class Criterion(BaseModel):
     # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#criteria
     id: str   # str #AnyUrl
+    type: str = "Criterion"
     threshold: Metric
     name: str
 
 
 class Facility(BaseModel):
     # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#product
+    type: str = "Facility"
     identifiers: Optional[List[Identifier]] = None
     name: str
     classifications: Optional[List[Classification]] = None
@@ -53,6 +57,7 @@ class Facility(BaseModel):
 
 class Product(BaseModel):
     # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#product
+    type:str = "Product"
     identifiers: Optional[List[Identifier]] = None
     marking: Optional[str] = None
     name: str
@@ -63,6 +68,7 @@ class Product(BaseModel):
 
 class ConformityAssessment(BaseModel):
     # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#conformityassessment
+    type: str = "ConformityAssessment"
     referenceStandard: Optional[Standard] = None     #defines the specification
     referenceRegulation: Optional[Regulation] = None #defines the regulation
     assessmentCriterion: Optional[Criterion] = None  #defines the criteria
@@ -75,7 +81,8 @@ class ConformityAssessment(BaseModel):
 
 class ConformityAssessmentScheme(BaseModel):
     # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#conformityattestation
-    id: str                                      # str #AnyUrl
+    id: str 
+    type:str = "ConformityAssessmentScheme"                                     # str #AnyUrl
     name: str
     trustmark: Optional[BinaryFile] = None
     issuingBody: Optional[Party] = None
@@ -91,7 +98,8 @@ class ConformityEvidence(BaseModel):
 
 class ConformityAttestation(BaseModel):
     # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#conformityattestation
-    id: str                                      #AnyUrl
+    id: str 
+    type: str = "ConformityAttestation"                                     #AnyUrl
     assessorLevel: Optional[AssessorAssuranceCode] = None
     assessmentLevel: AssessmentAssuranceCode
     type: AttestationType
