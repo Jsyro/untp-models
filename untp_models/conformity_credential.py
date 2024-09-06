@@ -1,120 +1,108 @@
 from typing import List, Optional
-from pydantic import BaseModel
-from .codes import AssessorAssuranceCode, AssessmentAssuranceCode, AttestationType, SustainabilityTopic
-from .base import Party, Authority, Status, Identifier, Measure, BinaryFile
-
-
-class Classification(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#classification
-    scheme: str                                  # str #AnyUrl
-    classifierValue: Optional[str] = None
-    classifierName: str
-    classifierURL: Optional[str] = None          # str #AnyUrl
+from pydantic import BaseModel, AnyUrl
+from .codes import AssessorLevelCode, AssessmentLevelCode, AttestationType, ConformityTopicCode
+from .base import Entity, Measure, BinaryFile, SecureLink, Endorsement, IdentifierScheme
 
 
 class Standard(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#standard
-    id: str                  # str #AnyUrl
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#standard
     type: str = "Standard"
+
+    id: AnyUrl
     name: str
-    issuingBody: Party
-    issueDate: str           #iso8601 datetime string
+    issuingParty: Entity
+    issueDate: str  #iso8601 datetime string
 
 
 class Regulation(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#regulation
-    id: str                  # str #AnyUrl
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#regulation
     type: str = "Regulation"
+
+    id: AnyUrl
     name: str
-    issuingBody: Party
-    effectiveDate: str       #iso8601 datetime string
+    jurisdictionCountry: str  #countryCode from https://vocabulary.uncefact.org/CountryId
+    administeredBy: Entity
+    effectiveDate: str  #iso8601 datetime string
 
 
 class Metric(BaseModel):
-    name: str
-    value: Measure
-    minimumValue: Measure
-    maximumValue: Measure
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#metric
+    type: str = "Metric"
+
+    metricName: str
+    metricValue: Measure
+    accuracy: float
 
 
 class Criterion(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#criteria
-    id: str   # str #AnyUrl
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#criterion
     type: str = "Criterion"
-    threshold: Metric
+
+    id: AnyUrl
     name: str
+    thresholdValues: Metric
 
 
 class Facility(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#product
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#facility
     type: str = "Facility"
-    identifiers: Optional[List[Identifier]] = None
+
+    # this looks wrongs
     name: str
-    classifications: Optional[List[Classification]] = None
-    geolocation: str         # str #AnyUrl for https://plus.codes/4RQGGVGP+ can be converted https://www.dcode.fr/open-location-code
-    verifiedByCAB: bool
+    registeredId: str
+    idScheme: IdentifierScheme
+    IDverifiedByCAB: bool
 
 
 class Product(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#product
-    type:str = "Product"
-    identifiers: Optional[List[Identifier]] = None
-    marking: Optional[str] = None
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#product
+    type: str = "Product"
+
+    id: AnyUrl  # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
     name: str
-    classifications: Optional[Classification] = None
-    testedBatchId: Optional[str] = None          # str #AnyUrl
-    verifiedByCAB: bool
+    registeredId: str
+    idScheme: IdentifierScheme
+    IDverifiedByCAB: bool
 
 
 class ConformityAssessment(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#conformityassessment
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#conformityassessment
     type: str = "ConformityAssessment"
-    referenceStandard: Optional[Standard] = None     #defines the specification
-    referenceRegulation: Optional[Regulation] = None #defines the regulation
+
+    id: str
+    referenceStandard: Optional[Standard] = None  #defines the specification
+    referenceRegulation: Optional[Regulation] = None  #defines the regulation
     assessmentCriterion: Optional[Criterion] = None  #defines the criteria
-    subjectProducts: Optional[List[Product]] = None
-    subjectFacilities: List[Facility]
-    measuredResults: Optional[List[Metric]] = None
+    declaredValues: Optional[List[Metric]] = None
     complaince: Optional[bool] = False
-    sustainabilityTopic: SustainabilityTopic
+    conformityTopic: ConformityTopicCode
+
+    assessedProducts: Optional[List[Product]] = None
+    assessedFacilities: Optional[List[Facility]] = None
 
 
 class ConformityAssessmentScheme(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#conformityattestation
-    id: str 
-    type:str = "ConformityAssessmentScheme"                                     # str #AnyUrl
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#conformityassessmentscheme
+    type: str = "ConformityAssessmentScheme"
+
+    id: str
     name: str
+    issuingParty: Optional[Entity] = None
+    issueDate: Optional[str] = None  #ISO8601 datetime string
     trustmark: Optional[BinaryFile] = None
-    issuingBody: Optional[Party] = None
-    dateOfIssue: Optional[str] = None            #ISO8601 datetime string
-
-
-class ConformityEvidence(BaseModel):
-    evidenceRootHash: str                        #md5 hash
-    description: str
-    evidenceFiles: List[BinaryFile]
-    decryptionKeyRequest: str                    # str #AnyUrl
 
 
 class ConformityAttestation(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#conformityattestation
-    id: str 
-    type: str = "ConformityAttestation"                                     #AnyUrl
-    assessorLevel: Optional[AssessorAssuranceCode] = None
-    assessmentLevel: AssessmentAssuranceCode
-    type: AttestationType
-    description: str
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#ConformityAttestation
+    type: str = "ConformityAttestation"
+    id: str
+    assessorLevel: Optional[AssessorLevelCode] = None
+    assessmentLevel: AssessmentLevelCode
+    attestationType: AttestationType
+    attestationDescription: str
+    issuedToParty: Entity
+    authorisations: Endorsement
+    conformityCertificate: SecureLink
+    auditableEvidence: SecureLink
     scope: ConformityAssessmentScheme
-    issuedBy: Party
-    issuedTo: Party
-    validFrom: str                               #iso8601 datetime string
-    validTo: Optional[str] = None                #iso8601 datetime string
-    status: Optional[Status] = None
-    assessments: List[
-        ConformityAssessment]                    #list of assessments that are part of this attestation, that this is a real mine.
-    evidence: Optional[
-        List[ConformityEvidence]] = None         #multi-media proof of claim (pictures, videos, etc)
-    accreditation: Optional[Authority] = None    #proof that CPO is the right authority (from BC Gov)
-    regulatoryApproval: Optional[
-        Authority] = None                        #regulation that allows CPO to issue this credential
-    certificate: Optional[BinaryFile] = None     #a human readable document, e.g. PDF
+    assessments: List[ConformityAssessment]
