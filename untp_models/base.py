@@ -1,47 +1,71 @@
 from typing import List, Optional
-from pydantic import BaseModel, Field
-from .codes import EvidenceFormat, EncryptionMethod
+from pydantic import BaseModel, Field, AnyUrl
+from .codes import EncryptionMethod, HashMethod
 
 
-class Evidence(BaseModel):
-    format: EvidenceFormat
-    credentialReference: Optional[str] = None
+class IdentifierScheme(BaseModel):
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#identifierscheme
+    type: str = "IdentifierScheme"
+
+    id: AnyUrl  # from vocabulary.uncefact.org/identifierSchemes
+    name: str
 
 
-class Identifier(BaseModel):
-    #https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential#identifier
-    scheme: Optional[str] = None                 # AnyUrl
-    identifierValue: str
-    identifierURI: Optional[str] = None          # AnyUrl
-    verificationEvidence: Optional[Evidence] = None
+class Entity(BaseModel):
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#entity
+    type: str = "Entity"
 
-
-class Party(BaseModel):
-    identifiers: Optional[List[Identifier]] = None
-    name: Optional[str] = None
+    id: AnyUrl
+    name: str
+    registeredId: str
+    idScheme: IdentifierScheme
 
 
 class BinaryFile(BaseModel):
-    fileHash: str
-    fileLocation: str        # AnyUrl
-    fileType: str            # Mimetype
-    encryption_method: EncryptionMethod
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#binaryfile
+    type: str = "BinaryFile"
+
+    fileName: str
+    fileType: str  # https://mimetype.io/all-types
+    file: str  #Base64
 
 
-class Authority(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential#authority
-    number: str
-    authorityEvidence: Evidence
-    trustmark: BinaryFile
-    authority: Party
+class Link(BaseModel):
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#link
+    type: str = "Link"
+
+    linkURL: AnyUrl
+    linkName: str
+    linkType: str  # drawn from a controlled vocabulary
 
 
-class Status(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#status
-    pass
+class SecureLink(BaseModel):
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#securelink
+    type: str = "SecureLink"
+
+    linkUrl: AnyUrl
+    linkName: str
+    linkType: str
+    hashDigest: str
+    hashMethod: HashMethod
+    encryptionMethod: EncryptionMethod
 
 
 class Measure(BaseModel):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#measure
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#measure
+    type: str = "Measure"
+
     value: float
-    unit: str = Field(max_length="3")            # from https://vocabulary.uncefact.org/UnitMeasureCode
+    unit: str = Field(
+        max_length="3")  # from https://vocabulary.uncefact.org/UnitMeasureCode
+
+
+class Endorsement(BaseModel):
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#endorsement
+    type: str = "Endorsement"
+
+    id: str
+    name: str
+    trustmark: BinaryFile
+    issuingAuthority: Entity
+    accreditationCertification: Link

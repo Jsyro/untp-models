@@ -1,19 +1,18 @@
 from enum import Enum
-from pydantic import BaseModel, AnyUrl
 
 
-class AssessorAssuranceCode(str, Enum):
-    #https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#assessorassurancecode
+class AssessorLevelCode(str, Enum):
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#assessorLevelCode
     Self = "Self"
     Commercial = "Commercial"
     Buyer = "Buyer"
     Membership = "Membership"
     Unspecified = "Unspecified"
-    ThirdParty = "ThirdParty"
+    ThirdParty = "3rdParty"
 
 
-class AssessmentAssuranceCode(str, Enum):
-    #https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#assessmentassurancecode
+class AssessmentLevelCode(str, Enum):
+    #https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#assessmentlevelcode
     GovtApproval = "GovtApproval"
     GlobalMLA = "GlobalMLA"
     Accredited = "Accredited"
@@ -33,22 +32,19 @@ class AttestationType(str, Enum):
     Calibration = "Calibration"
 
 
+class HashMethod(str, Enum):
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#hashmethodcode
+    SHA256 = "SHA-256"
+    SHA1 = "SHA-1"
+
+
 class EncryptionMethod(str, Enum):
     NONE = "None"
     AES = "AES"
 
 
-class EvidenceFormat(str, Enum):
-    # https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#evidenceformat
-    W3C_VC = "W3C_VC"
-    ISO_MDL = "ISO_MDL"
-    Document = "Document"
-    Website = "Website"
-    Other = "Other"
-
-
-class SustainabilityTopic(str, Enum):
-    #https://uncefact.github.io/spec-untp/docs/specification/ConformityCredential/#sustainabilitytopic
+class ConformityTopicCode(str, Enum):
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#conformityTopicCode
     Environment_Energy = "Environment.Energy"
     Environment_Emissions = "Environment.Emissions"
     Environment_Water = "Environment.Water"
@@ -60,6 +56,7 @@ class SustainabilityTopic(str, Enum):
     Social_Labour = "Social.Labour"
     Social_Rights = "Social.Rights"
     Social_Safety = "Social.Safety"
+    Social_Community = "Social.Community"
     Governance_Ethics = "Governance.Ethics"
     Governance_Compliance = "Governance.Compliance"
     Governance_Transparency = "Governance.Transparency"
