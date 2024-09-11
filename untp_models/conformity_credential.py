@@ -48,6 +48,7 @@ class Facility(BaseModel):
     type: str = "Facility"
 
     # this looks wrongs
+    id: AnyUrl  # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
     name: str
     registeredId: Optional[str] = None
     idScheme: Optional[IdentifierScheme] = None
@@ -69,12 +70,12 @@ class ConformityAssessment(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#conformityassessment
     type: str = "ConformityAssessment"
 
-    id: str
+    id: AnyUrl
     referenceStandard: Optional[Standard] = None  #defines the specification
     referenceRegulation: Optional[Regulation] = None  #defines the regulation
     assessmentCriterion: Optional[Criterion] = None  #defines the criteria
     declaredValues: Optional[List[Metric]] = None
-    complaince: Optional[bool] = False
+    compliance: Optional[bool] = False
     conformityTopic: ConformityTopicCode
 
     assessedProducts: Optional[List[Product]] = None
