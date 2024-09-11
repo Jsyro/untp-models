@@ -66,6 +66,6 @@ class Endorsement(BaseModel):
 
     id: str
     name: str
-    trustmark: BinaryFile
+    trustmark: Optional[BinaryFile]
     issuingAuthority: Entity
-    accreditationCertification: Link
+    accreditationCertification: Optional[Link]
