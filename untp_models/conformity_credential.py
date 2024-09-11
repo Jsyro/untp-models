@@ -100,7 +100,7 @@ class ConformityAttestation(BaseModel):
     assessorLevel: Optional[AssessorLevelCode] = None
     assessmentLevel: AssessmentLevelCode
     attestationType: AttestationType
-    attestationDescription: str
+    attestationDescription: Optional[str] = None  #missing from context file
     issuedToParty: Entity
     authorisations: Optional[Endorsement] = None
     conformityCertificate: Optional[SecureLink] = None
