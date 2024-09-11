@@ -64,7 +64,7 @@ class Endorsement(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#endorsement
     type: str = "Endorsement"
 
-    id: str
+    id: AnyUrl
     name: str
     trustmark: Optional[BinaryFile] = None
     issuingAuthority: Entity
