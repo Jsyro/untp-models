@@ -17,8 +17,8 @@ class Entity(BaseModel):
 
     id: AnyUrl
     name: str
-    registeredId: Optional[str]
-    idScheme: Optional[IdentifierScheme]
+    registeredId: Optional[str] = None
+    idScheme: Optional[IdentifierScheme] = None
 
 
 class BinaryFile(BaseModel):
@@ -66,6 +66,6 @@ class Endorsement(BaseModel):
 
     id: str
     name: str
-    trustmark: Optional[BinaryFile]
+    trustmark: Optional[BinaryFile] = None
     issuingAuthority: Entity
-    accreditationCertification: Optional[Link]
+    accreditationCertification: Optional[Link] = None
