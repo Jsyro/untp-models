@@ -17,8 +17,8 @@ class Entity(BaseModel):
 
     id: AnyUrl
     name: str
-    registeredId: str
-    idScheme: IdentifierScheme
+    registeredId: Optional[str]
+    idScheme: Optional[IdentifierScheme]
 
 
 class BinaryFile(BaseModel):

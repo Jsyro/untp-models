@@ -49,8 +49,8 @@ class Facility(BaseModel):
 
     # this looks wrongs
     name: str
-    registeredId: str
-    idScheme: IdentifierScheme
+    registeredId: Optional[str]
+    idScheme: Optional[IdentifierScheme]
     IDverifiedByCAB: bool
 
 
@@ -60,8 +60,8 @@ class Product(BaseModel):
 
     id: AnyUrl  # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
     name: str
-    registeredId: str
-    idScheme: IdentifierScheme
+    registeredId: Optional[str]
+    idScheme: Optional[IdentifierScheme]
     IDverifiedByCAB: bool
 
 
@@ -101,8 +101,8 @@ class ConformityAttestation(BaseModel):
     attestationType: AttestationType
     attestationDescription: str
     issuedToParty: Entity
-    authorisations: Endorsement
-    conformityCertificate: SecureLink
-    auditableEvidence: SecureLink
+    authorisations: Optional[Endorsement]
+    conformityCertificate: Optional[SecureLink]
+    auditableEvidence: Optional[SecureLink]
     scope: ConformityAssessmentScheme
     assessments: List[ConformityAssessment]
