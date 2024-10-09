@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class AssessorLevelCode(str, Enum):
-    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#assessorLevelCode
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#assessorLevelCode
     Self = "Self"
     Commercial = "Commercial"
     Buyer = "Buyer"
@@ -12,9 +12,9 @@ class AssessorLevelCode(str, Enum):
 
 
 class AssessmentLevelCode(str, Enum):
-    #https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#assessmentlevelcode
+    #https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#assessmentlevelcode
     GovtApproval = "GovtApproval"
-    GlobalMLA = "GlobalMLA"
+    GlobalMRA = "GlobalMRA"
     Accredited = "Accredited"
     Verified = "Verified"
     Validated = "Validated"
@@ -33,7 +33,7 @@ class AttestationType(str, Enum):
 
 
 class HashMethod(str, Enum):
-    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#hashmethodcode
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#hashmethodcode
     SHA256 = "SHA-256"
     SHA1 = "SHA-1"
 
@@ -44,7 +44,7 @@ class EncryptionMethod(str, Enum):
 
 
 class ConformityTopicCode(str, Enum):
-    # https://jargon.sh/user/unece/ConformityCredential/v/0.3.10/artefacts/readme/render#conformityTopicCode
+    # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#conformityTopicCode
     Environment_Energy = "Environment.Energy"
     Environment_Emissions = "Environment.Emissions"
     Environment_Water = "Environment.Water"
