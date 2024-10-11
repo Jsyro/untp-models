@@ -104,8 +104,8 @@ class ConformityAssessment(BaseModel):
     conformance: Optional[bool] = None
     conformityTopic: ConformityTopicCode
 
-    assessedProducts: Optional[Product] = None
-    assessedFacilities: Optional[Facility] = None
+    assessedProduct: Optional[Product] = None
+    assessedFacility: Optional[Facility] = None
     assessedOrganization: Optional[Party] = None
     auditor: Optional[Party] = None
 
