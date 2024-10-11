@@ -1,9 +1,9 @@
 from datetime import date
 from decimal import Decimal
-from typing import List, Optional
+from typing import List, Optional, Union
 from pydantic import BaseModel, AnyUrl, Field
 from .codes import AssessorLevelCode, AssessmentLevelCode, AttestationType, ConformityTopicCode
-from .base import Identifier, Measure, BinaryFile, SecureLink, Endorsement, IdentifierScheme, Party, Location, Address
+from .base import Identifier, Measure, BinaryFile, SecureLink, Endorsement, IdentifierScheme, Party, LocationInformation, Address
 
 
 class Standard(BaseModel):
@@ -50,8 +50,7 @@ class Facility(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#facility
     type: str = "Facility"
 
-    # this looks wrongs
-    id: AnyUrl  # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
+    id: Optional[AnyUrl] # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
     name: str
     registeredId: Optional[str] = None
     idScheme: Optional[IdentifierScheme] = None
@@ -62,7 +61,8 @@ class Facility(BaseModel):
     operatedByParty: Optional[bool] = None
     otherIdentifier: Optional[str] = None
 
-    locationInformation: Optional[Location] = None
+    #jargon makes it look like a class, schema looks like an attribute. 
+    locationInformation: Optional[Union[str, LocationInformation]] = None 
     address: Optional[Address] = None
 
     IDverifiedByCAB: bool
@@ -137,7 +137,7 @@ class ConformityAttestation(BaseModel):
     auditableEvidence: Optional[SecureLink] = None
     scope: ConformityAssessmentScheme
     assessment: List[ConformityAssessment]
-
+                                                                      
 
 class CredentialIssuer(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#credentialissuer
