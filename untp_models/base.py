@@ -8,7 +8,7 @@ class IdentifierScheme(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#identifierscheme
     type: str = "IdentifierScheme"
 
-    id: AnyUrl  # from vocabulary.uncefact.org/identifierSchemes
+    id: Optional[AnyUrl] # from vocabulary.uncefact.org/identifierSchemes
     name: str
 
 
@@ -16,7 +16,7 @@ class Party(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#Party
     type: str = "Party"
 
-    id: AnyUrl
+    id: Optional[AnyUrl]
     name: str
     registeredId: Optional[str] = None
     idScheme: Optional[IdentifierScheme] = None
@@ -30,7 +30,7 @@ class Identifier(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#identifier
     type: str = "Identifier"
 
-    id: AnyUrl
+    id: Optional[AnyUrl]
     name: str
     registeredId: Optional[str] = None
     idScheme: Optional[IdentifierScheme] = None
@@ -79,7 +79,7 @@ class Endorsement(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#endorsement
     type: str = "Endorsement"
 
-    id: AnyUrl
+    id: Optional[AnyUrl]
     name: str
     trustmark: Optional[BinaryFile] = None
     issuingAuthority: Identifier

@@ -10,7 +10,7 @@ class Standard(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#standard
     type: str = "Standard"
 
-    id: AnyUrl
+    id: Optional[AnyUrl]
     name: str
     issuingParty: Identifier
     issueDate: str  #iso8601 datetime string
@@ -20,7 +20,7 @@ class Regulation(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#regulation
     type: str = "Regulation"
 
-    id: AnyUrl
+    id: Optional[AnyUrl]
     name: str
     jurisdictionCountry: str  #countryCode from https://vocabulary.uncefact.org/CountryId
     administeredBy: Identifier
@@ -41,7 +41,7 @@ class Criterion(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#criterion
     type: str = "Criterion"
 
-    id: AnyUrl
+    id: Optional[AnyUrl]
     name: str
     thresholdValues: List[Metric]
 
@@ -72,7 +72,7 @@ class Product(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#product
     type: str = "Product"
 
-    id: AnyUrl  # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
+    id: Optional[AnyUrl]  # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
     name: str
     registeredId: Optional[str] = None
     idScheme: Optional[IdentifierScheme] = None
@@ -94,7 +94,7 @@ class ConformityAssessment(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#conformityassessment
     type: str = "ConformityAssessment"
 
-    id: AnyUrl
+    id: Optional[AnyUrl]
     assessmentDate: date
 
     referenceStandard: Optional[Standard] = None  #defines the specification
@@ -143,15 +143,19 @@ class CredentialIssuer(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#credentialissuer
     type: str = "CredentialIssuer"
 
-    id: AnyUrl
+    id: Optional[AnyUrl]
     name: str
     otherIdentifier: Identifier
 
 class DigitalConformityCredential(BaseModel):
     #https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#digitalconformitycredential
+    
     context: str = Field(alias="@context")
-    id: AnyUrl
+    id: Optional[AnyUrl]
     issuer: CredentialIssuer
     validFrom: str #DateTime
     validUntil: str #DateTime
     credentialSubject: ConformityAttestation
+    credentialSchema: List[dict[str,str]] = {
+
+    }
