@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "untp_models"
-version = "0.0.5"
+version = "0.0.6"
 requires-python = ">= 3.8"
 readme = "README.md"
 dependencies = ["pydantic==2.7.1"]
