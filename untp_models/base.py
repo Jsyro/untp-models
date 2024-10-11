@@ -20,7 +20,7 @@ class Party(BaseModel):
     name: str
     registeredId: Optional[str] = None
     idScheme: Optional[IdentifierScheme] = None
-    description: str
+    # description: str in jargon, but not in context
     registrationCountry: Optional[str] = None
     organizationWebsite: Optional[str] = None
     industryCategory: Optional[str] = None
@@ -115,9 +115,9 @@ class Location(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#location
     type: str = "Location"
 
-    plusCode: Optional[AnyUrl]
-    geoLocation: Optional[Point]
-    geoBoundary: Optional[Polygon]
+    plusCode: Optional[AnyUrl] = None
+    geoLocation: Optional[Point] = None
+    geoBoundary: Optional[Polygon] = None
 
 class Address(BaseModel): 
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#address

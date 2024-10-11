@@ -62,8 +62,8 @@ class Facility(BaseModel):
     operatedByParty: Optional[bool] = None
     otherIdentifier: Optional[str] = None
 
-    locationInformation: Optional[Location]
-    address: Optional[Address]
+    locationInformation: Optional[Location] = None
+    address: Optional[Address] = None
 
     IDverifiedByCAB: bool
 
