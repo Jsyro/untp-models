@@ -43,7 +43,7 @@ class Criterion(BaseModel):
 
     id: AnyUrl
     name: str
-    thresholdValues: Metric
+    thresholdValues: List[Metric]
 
 
 class Facility(BaseModel):
@@ -99,13 +99,13 @@ class ConformityAssessment(BaseModel):
 
     referenceStandard: Optional[Standard] = None  #defines the specification
     referenceRegulation: Optional[Regulation] = None  #defines the regulation
-    assessmentCriterion: Optional[Criterion] = None  #defines the criteria
+    assessmentCriterion: Optional[List[Criterion]] = None  #defines the criteria
     declaredValues: Optional[List[Metric]] = None
     conformance: Optional[bool] = None
     conformityTopic: ConformityTopicCode
 
-    assessedProduct: Optional[Product] = None
-    assessedFacility: Optional[Facility] = None
+    assessedProduct: Optional[List[Product]] = None
+    assessedFacility: Optional[List[Facility]] = None
     assessedOrganization: Optional[Party] = None
     auditor: Optional[Party] = None
 
@@ -132,11 +132,11 @@ class ConformityAttestation(BaseModel):
     attestationType: AttestationType
     description: Optional[str] = None  #missing from context file
     issuedToParty: Party
-    authorisation: Optional[Endorsement] = None
+    authorisation: Optional[List[Endorsement]] = None
     conformityCertificate: Optional[SecureLink] = None
     auditableEvidence: Optional[SecureLink] = None
     scope: ConformityAssessmentScheme
-    assessment: ConformityAssessment
+    assessment: List[ConformityAssessment]
 
 
 class CredentialIssuer(BaseModel):
