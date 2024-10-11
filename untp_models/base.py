@@ -111,7 +111,7 @@ class Polygon(BaseModel):
     coordinates: Point3DWrapper
 
 
-class locationInformation(BaseModel): 
+class LocationInformation(BaseModel): 
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#location
     type: str = "LocationInformation"
 
