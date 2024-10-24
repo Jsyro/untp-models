@@ -10,7 +10,7 @@ class Standard(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#standard
     type: str = "Standard"
 
-    id: Optional[AnyUrl]
+    id: Optional[AnyUrl] = None
     name: str
     issuingParty: Identifier
     issueDate: str  #iso8601 datetime string
@@ -20,7 +20,7 @@ class Regulation(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#regulation
     type: str = "Regulation"
 
-    id: Optional[AnyUrl]
+    id: Optional[AnyUrl] = None
     name: str
     jurisdictionCountry: str  #countryCode from https://vocabulary.uncefact.org/CountryId
     administeredBy: Identifier
@@ -50,7 +50,7 @@ class Facility(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#facility
     type: str = "Facility"
 
-    id: Optional[AnyUrl] # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
+    id: Optional[AnyUrl] = None # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
     name: str
     registeredId: Optional[str] = None
     idScheme: Optional[IdentifierScheme] = None
@@ -72,7 +72,7 @@ class Product(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#product
     type: str = "Product"
 
-    id: Optional[AnyUrl]  # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
+    id: Optional[AnyUrl] = None # The globally unique ID of the entity as a resolvable URL according to ISO 18975.
     name: str
     registeredId: Optional[str] = None
     idScheme: Optional[IdentifierScheme] = None
@@ -94,7 +94,7 @@ class ConformityAssessment(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#conformityassessment
     type: str = "ConformityAssessment"
 
-    id: Optional[AnyUrl]
+    id: Optional[AnyUrl] = None
     assessmentDate: date
 
     referenceStandard: Optional[Standard] = None  #defines the specification
@@ -114,7 +114,7 @@ class ConformityAssessmentScheme(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#conformityassessmentscheme
     type: str = "ConformityAssessmentScheme"
 
-    id: str
+    id: Optional[AnyUrl] = None
     name: str
     issuingParty: Optional[Identifier] = None
     issueDate: Optional[str] = None  #ISO8601 datetime string
@@ -125,7 +125,7 @@ class ConformityAttestation(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#ConformityAttestation
     type: str = "ConformityAttestation"
 
-    id: str
+    id: Optional[AnyUrl] = None
     name: str
     assessorLevel: Optional[AssessorLevelCode] = None
     assessmentLevel: AssessmentLevelCode
@@ -143,7 +143,7 @@ class CredentialIssuer(BaseModel):
     # https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#credentialissuer
     type: str = "CredentialIssuer"
 
-    id: Optional[AnyUrl]
+    id: Optional[AnyUrl] = None
     name: str
     otherIdentifier: Identifier
 
@@ -151,7 +151,7 @@ class DigitalConformityCredential(BaseModel):
     #https://jargon.sh/user/unece/ConformityCredential/v/0.5.0/artefacts/readme/render#digitalconformitycredential
     
     context: str = Field(alias="@context")
-    id: Optional[AnyUrl]
+    id: Optional[AnyUrl] = None
     issuer: CredentialIssuer
     validFrom: str #DateTime
     validUntil: str #DateTime
